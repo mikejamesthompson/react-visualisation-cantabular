@@ -1,0 +1,17 @@
+:root {
+  --body-type-color: #22242C;
+  --body-background-color: #f6ffff;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background: var(--body-background-color);
+  color: var(--body-type-color);
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 1.4rem;
+  height: 100%;
+  margin: 0;
+}
