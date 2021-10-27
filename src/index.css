@@ -11,7 +11,7 @@ body {
   background: var(--body-background-color);
   color: var(--body-type-color);
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   height: 100%;
   margin: 0;
 }
