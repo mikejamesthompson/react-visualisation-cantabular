@@ -1,0 +1,32 @@
+.chart {
+  margin: 0 auto;
+  max-width: 600px;
+  width: 100%;
+}
+
+.chart__controls {
+  margin-bottom: 1.2rem;
+}
+
+.chart__controls select {
+  width: 100%;
+}
+
+.chart__svg {
+  display: block;
+  height: auto;
+  overflow: visible;
+  width: 100%;
+}
+
+.tick line {
+  stroke: #ccc;
+}
+
+.x-axis text {
+  transform: rotate(45deg);
+}
+
+.chart rect {
+  fill: var(--highlight-color);
+}

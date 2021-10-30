@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, useEffect } from 'react';
-import ChartController from './ChartController';
+import ChartController from './BarChart/BarChartController';
 
 import { queryCantabularGraphQL, ApiVariable, VariablesResponse } from '../helpers/cantabular';
 import { VARIABLES_QUERY, ENDPOINT, DATASET } from '../helpers/queries';
@@ -30,7 +30,7 @@ const App = (): ReactElement => {
   }, [ENDPOINT, DATASET]);
 
   if (variables.length === 0) {
-    return <p>Loading ...</p>
+    return <p className="loading-indicator">Loading ...</p>
   } else {
     return <ChartController variables={variables} />;
   }

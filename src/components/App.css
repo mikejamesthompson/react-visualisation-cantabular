@@ -1,9 +1,15 @@
 #app {
-  display: block;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  padding: 1.2rem;
   width: 100%;
 }
 
-h1 {
-  text-align: center;
+.loading-indicator {
+  background: url('../../images/spinner.gif') center center no-repeat;
+  height: 100%;
+  width: 100%;
+  text-indent: -999em;
 }

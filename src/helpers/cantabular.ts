@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import { json } from 'd3-fetch';
 
 export type QueryResponse<T> = {
   data: T,
@@ -31,18 +31,23 @@ export type ApiVariable = {
   label: string,
 }
 
+export type ApiDimension = {
+  count: number,
+  categories: ApiCategory[],
+  variable: ApiVariable,
+}
+
 type ApiTable = {
-  dimensions: Array<{
-    count: number,
-    categories: ApiCategory[],
-    variable: ApiVariable,
-  }>,
+  dimensions: ApiDimension[],
   values: number[],
 };
 
 type TableRow = {
-  [key: string]: string,
-} & { value?: number };
+  categories: {
+    [key: string]: string
+  },
+  value: number,
+};
 
 export type DataTable = TableRow[];
 
@@ -51,7 +56,7 @@ export async function queryCantabularGraphQL<T>(
   query: string,
   variables: { [key: string]: string | string[] },
 ): Promise<QueryResponse<T> | undefined> {
-  return await d3.json(url, {
+  return await json(url, {
     body: JSON.stringify({
       "query": query,
       "variables": variables,
@@ -80,11 +85,13 @@ export function processCounts(table: ApiTable) {
 }
 
 export function populateRow(table: ApiTable, indices: number[], n: number) {
-  const obj: TableRow = {};
+  const obj: TableRow = {
+    categories: {},
+    value: table.values[n]
+  };
   indices.forEach((index, i) => {
     const dim = table.dimensions[i];
-    obj[dim.variable.label] = dim.categories[index].label;
+    obj.categories[dim.variable.label] = dim.categories[index].label;
   });
-  obj['value'] = table.values[n];
   return obj;
 }
