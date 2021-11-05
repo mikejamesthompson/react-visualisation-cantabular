@@ -14,25 +14,24 @@ const App = (): ReactElement => {
       const response = await queryCantabularGraphQL<VariablesResponse>(
         ENDPOINT,
         VARIABLES_QUERY,
-        { 'dataset': DATASET },
+        { dataset: DATASET },
       );
       // Only use variables with a reasonably
       // small number of categories
       if (response) {
-        const vars = response.data.dataset.variables.edges.map((v): ApiVariable => {
-          return v.node;
-        }).filter(v => v.categories.totalCount < 100);
+        const vars = response.data.dataset.variables.edges.map(
+          (v): ApiVariable => v.node,
+        ).filter((v) => v.categories.totalCount < 100);
         setVariables(vars);
       }
     }
     getData();
-  }, [ENDPOINT, DATASET]);
+  });
 
   if (variables.length === 0) {
-    return <p className="loading">Loading ...</p>
-  } else {
-    return <ChartController variables={variables} />;
+    return <p className="loading">Loading ...</p>;
   }
-}
+  return <ChartController variables={variables} />;
+};
 
 export default App;

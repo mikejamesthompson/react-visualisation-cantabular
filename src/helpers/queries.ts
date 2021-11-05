@@ -3,24 +3,24 @@ export const DATASET = 'Ireland-1911-preview';
 
 export const TABLE_QUERY = `
   query($dataset: String!, $variables: [String!]!, $filters: [Filter!]) {
-		dataset(name: $dataset) {
-			table(variables: $variables, filters: $filters) {
-				dimensions {
-					count
-					categories {
-						code
-						label
-					}
-					variable {
-						name
-						label
-					}
-				}
-				values
-			}
-		}
-	}
-`.replace(/\s+/g, " ");
+    dataset(name: $dataset) {
+      table(variables: $variables, filters: $filters) {
+        dimensions {
+          count
+          categories {
+            code
+            label
+          }
+          variable {
+            name
+            label
+          }
+        }
+        values
+      }
+    }
+  }
+`.replace(/\s+/g, ' ');
 
 export const VARIABLES_QUERY = `
   query($dataset: String!) {
@@ -38,4 +38,4 @@ export const VARIABLES_QUERY = `
       }
     }
   }
-`.replace(/\s+/g, " ");
+`.replace(/\s+/g, ' ');

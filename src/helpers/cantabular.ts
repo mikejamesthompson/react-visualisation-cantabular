@@ -3,7 +3,7 @@ import { json } from 'd3-fetch';
 export type QueryResponse<T> = {
   data: T,
   errors?: any,
-}
+};
 
 export type VariablesResponse = {
   dataset: {
@@ -13,18 +13,18 @@ export type VariablesResponse = {
       }>
     }
   }
-}
+};
 
 export type TableResponse = {
   dataset: {
     table: ApiTable
   }
-}
+};
 
 export type ApiCategory = {
   code: string,
   label: string,
-}
+};
 
 export type ApiVariable = {
   name: string,
@@ -32,13 +32,13 @@ export type ApiVariable = {
   categories: {
     totalCount: number,
   }
-}
+};
 
 export type ApiDimension = {
   count: number,
   categories: ApiCategory[],
   variable: ApiVariable,
-}
+};
 
 type ApiTable = {
   dimensions: ApiDimension[],
@@ -59,22 +59,34 @@ export async function queryCantabularGraphQL<T>(
   query: string,
   variables: { [key: string]: string | string[] },
 ): Promise<QueryResponse<T> | undefined> {
-  return await json(url, {
+  return json(url, {
     body: JSON.stringify({
-      "query": query,
-      "variables": variables,
+      query,
+      variables,
     }),
-    headers: {"Content-Type": "application/json"},
-    method: "POST",
-    mode: "cors"
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    mode: 'cors',
   });
+}
+
+export function populateRow(table: ApiTable, indices: number[], n: number) {
+  const obj: TableRow = {
+    categories: {},
+    value: table.values[n],
+  };
+  indices.forEach((index, i) => {
+    const dim = table.dimensions[i];
+    obj.categories[dim.variable.label] = dim.categories[index].label;
+  });
+  return obj;
 }
 
 export function processCounts(table: ApiTable) {
   const dimLengths = table.dimensions.map((d) => d.count);
   const dimIndices = table.dimensions.map(() => 0);
-  let result = [];
-  for (let i = 0; i < table.values.length; i++) {
+  const result = [];
+  for (let i = 0; i < table.values.length; i += 1) {
     result.push(populateRow(table, dimIndices, i));
     let j = dimIndices.length - 1;
     while (j >= 0) {
@@ -85,16 +97,4 @@ export function processCounts(table: ApiTable) {
     }
   }
   return result;
-}
-
-export function populateRow(table: ApiTable, indices: number[], n: number) {
-  const obj: TableRow = {
-    categories: {},
-    value: table.values[n]
-  };
-  indices.forEach((index, i) => {
-    const dim = table.dimensions[i];
-    obj.categories[dim.variable.label] = dim.categories[index].label;
-  });
-  return obj;
 }
