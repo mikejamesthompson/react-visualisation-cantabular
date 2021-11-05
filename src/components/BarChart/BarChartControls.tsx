@@ -3,7 +3,7 @@ import { ApiVariable } from '../../helpers/cantabular';
 
 type Props = {
   variables: ApiVariable[];
-  currentVariableName: string;
+  currentVariableIndex: number;
   updateCurrentVariable: Function;
 }
 
@@ -15,9 +15,9 @@ const BarChartControls = (props: Props): ReactElement => {
 
   return (
     <div className="chart__controls">
-      <select onChange={handleChange} value={props.currentVariableName}>
-        {props.variables.map((v) =>
-          <option key={v.name} value={v.name}>
+      <select onChange={handleChange} value={props.currentVariableIndex}>
+        {props.variables.map((v, i) =>
+          <option key={v.name} value={i}>
             {v.label}
           </option>
         )};

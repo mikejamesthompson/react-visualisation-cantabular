@@ -1,7 +1,8 @@
 :root {
   --body-type-color: #22242C;
   --body-background-color: #f6ffff;
-  --highlight-color: #45C1B3
+  --highlight-color: #45C1B3;
+  --highlight-color-tint: #349393;
 }
 
 html {

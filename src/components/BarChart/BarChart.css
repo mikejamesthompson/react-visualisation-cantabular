@@ -19,14 +19,31 @@
   width: 100%;
 }
 
-.tick line {
+.y-axis line {
   stroke: #ccc;
 }
 
+.axis .axis__line {
+  stroke: #444;
+}
+
 .x-axis text {
-  transform: rotate(45deg);
+  transform: rotate(40deg);
+}
+
+.x-axis g.hide-half, .x-axis g.hide-twothirds {
+  display: none;
+}
+
+.x-axis g.hide-half.text-2n,
+.x-axis g.hide-twothirds.text-3n {
+  display: block;
 }
 
 .chart rect {
   fill: var(--highlight-color);
+}
+
+.chart rect:hover {
+  fill: var(--highlight-color-tint);
 }

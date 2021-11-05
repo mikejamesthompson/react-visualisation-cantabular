@@ -9,7 +9,7 @@ type ChartProps = {
 }
 
 const ChartController = (props: ChartProps): ReactElement => {
-  const [currentVariableName, setCurrentVariableName] = useState(props.variables[0].name);
+  const [currentVariableIndex, setCurrentVariableIndex] = useState(0);
   const [data, setData] = useState<DataTable>([]);
   const [dimension, setDimension] = useState<ApiDimension>();
 
@@ -18,7 +18,7 @@ const ChartController = (props: ChartProps): ReactElement => {
       const response = await queryCantabularGraphQL<TableResponse>(
         ENDPOINT,
         TABLE_QUERY,
-        { 'dataset': DATASET, 'variables': [currentVariableName] },
+        { 'dataset': DATASET, 'variables': [props.variables[currentVariableIndex].name] },
       );
       if (response) {
         const table = processCounts(response.data.dataset.table);
@@ -27,12 +27,20 @@ const ChartController = (props: ChartProps): ReactElement => {
       }
     }
     updateData();
-  }, [currentVariableName]);
+  }, [currentVariableIndex]);
+
+  function barChart(): ReactElement {
+    if (data.length === 0 || typeof dimension === 'undefined') {
+      return <p className="loading">Loading ...</p>
+    } else {
+      return <BarChart data={data} dimension={dimension} />
+    }
+  }
 
   return (
     <div className="chart">
-      <BarChartControls variables={props.variables} updateCurrentVariable={setCurrentVariableName} currentVariableName={currentVariableName} />
-      <BarChart data={data} dimension={dimension} />
+      <BarChartControls variables={props.variables} updateCurrentVariable={setCurrentVariableIndex} currentVariableIndex={currentVariableIndex} />
+      {barChart()}
     </div>
   );
 

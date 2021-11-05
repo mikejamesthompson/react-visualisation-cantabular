@@ -1,0 +1,21 @@
+.tooltip {
+  background: rgba(35, 35, 35, 0.8);
+  border-radius: 4px;
+  box-shadow: 0px 2px 12px rgba(0,0,0,0.4);
+  color: #fff;
+  padding: 0.8rem;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.tooltip h3 {
+  font-size: 1rem;
+  margin: 0 0 0.125em;
+}
+
+.tooltip p {
+  font-size: 1rem;
+  margin: 0;
+}

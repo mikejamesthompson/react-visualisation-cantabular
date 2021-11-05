@@ -16,13 +16,12 @@ const App = (): ReactElement => {
         VARIABLES_QUERY,
         { 'dataset': DATASET },
       );
+      // Only use variables with a reasonably
+      // small number of categories
       if (response) {
         const vars = response.data.dataset.variables.edges.map((v): ApiVariable => {
-          return {
-            name: v.node.name,
-            label: v.node.label,
-          }
-        });
+          return v.node;
+        }).filter(v => v.categories.totalCount < 100);
         setVariables(vars);
       }
     }
@@ -30,7 +29,7 @@ const App = (): ReactElement => {
   }, [ENDPOINT, DATASET]);
 
   if (variables.length === 0) {
-    return <p className="loading-indicator">Loading ...</p>
+    return <p className="loading">Loading ...</p>
   } else {
     return <ChartController variables={variables} />;
   }

@@ -3,6 +3,10 @@
     "browser": true,
     "es2021": true
   },
+  "plugins": [
+    "react",
+    "@typescript-eslint"
+  ],
   "extends": [
     "airbnb",
     "airbnb-typescript",
@@ -17,10 +21,6 @@
     "sourceType": "module",
     "project": "tsconfig.json"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint"
-  ],
   "rules": {
   }
 }

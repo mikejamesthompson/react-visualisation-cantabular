@@ -29,6 +29,9 @@ export type ApiCategory = {
 export type ApiVariable = {
   name: string,
   label: string,
+  categories: {
+    totalCount: number,
+  }
 }
 
 export type ApiDimension = {
@@ -42,7 +45,7 @@ type ApiTable = {
   values: number[],
 };
 
-type TableRow = {
+export type TableRow = {
   categories: {
     [key: string]: string
   },

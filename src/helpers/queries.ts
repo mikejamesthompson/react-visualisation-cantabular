@@ -30,6 +30,9 @@ export const VARIABLES_QUERY = `
           node {
             name
             label
+            categories {
+              totalCount
+            }
           }
         }
       }
