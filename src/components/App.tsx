@@ -2,19 +2,24 @@ import React, { ReactElement, useState, useEffect } from 'react';
 import ChartController from './BarChart/BarChartController';
 
 import { queryCantabularGraphQL, ApiVariable, VariablesResponse } from '../helpers/cantabular';
-import { VARIABLES_QUERY, ENDPOINT, DATASET } from '../helpers/queries';
+import { VARIABLES_QUERY } from '../helpers/queries';
 
 import './App.css';
 
-const App = (): ReactElement => {
+type Props = {
+  url: string,
+  dataset: string,
+};
+
+const App = ({ url, dataset }: Props): ReactElement => {
   const [variables, setVariables] = useState<ApiVariable[]>([]);
 
   useEffect(() => {
     async function getData() {
       const response = await queryCantabularGraphQL<VariablesResponse>(
-        ENDPOINT,
+        url,
         VARIABLES_QUERY,
-        { dataset: DATASET },
+        { dataset },
       );
       // Only use variables with a reasonably
       // small number of categories
@@ -26,7 +31,7 @@ const App = (): ReactElement => {
       }
     }
     getData();
-  });
+  }, [url, dataset]);
 
   if (variables.length === 0) {
     return <p className="loading">Loading ...</p>;
